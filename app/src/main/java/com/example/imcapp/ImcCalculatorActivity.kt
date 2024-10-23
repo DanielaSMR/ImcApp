@@ -1,12 +1,15 @@
 package com.example.imcapp
 
+import android.icu.text.DecimalFormat
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.slider.Slider
 
 class ImcCalculatorActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,10 +28,14 @@ class ImcCalculatorActivity : AppCompatActivity() {
 
     private fun initListeners() {
         viewMale.setOnClickListener(){
-
+            setGenderColor(true)
         }
         viewFemale.setOnClickListener(){
-
+            setGenderColor(false)
+        }
+        viewBarraCm.addOnChangeListener { _, value, _ ->
+            //tvHeight.text = value.toString()
+            viewCm.text = DecimalFormat("#.##").format(value) + " cm"
         }
     }
 
@@ -41,7 +48,7 @@ class ImcCalculatorActivity : AppCompatActivity() {
         return ContextCompat.getColor(this,colorReference)
     }
 
-    private fun setGenderColor(){
+    private fun setGenderColor(isMaleSelected:Boolean){
         viewMale.setCardBackgroundColor(getBackGroundColor(isMaleSelected))
         viewFemale.setCardBackgroundColor(getBackGroundColor(!isMaleSelected))
     }
@@ -49,8 +56,12 @@ class ImcCalculatorActivity : AppCompatActivity() {
     private fun initComponents() {
         viewMale = findViewById(R.id.viewMale)
         viewFemale = findViewById(R.id.viewFemale)
+        viewCm = findViewById(R.id.tvHeight)
+        viewBarraCm = findViewById(R.id.rsHeight)
     }
 
+    private lateinit var viewBarraCm : Slider
+    private lateinit var viewCm : TextView
     private lateinit var viewMale: CardView
     private lateinit var viewFemale: CardView
     private var isMaleSelected: Boolean = true;
