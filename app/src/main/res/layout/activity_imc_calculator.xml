@@ -199,25 +199,27 @@
             android:paddingHorizontal="16dp"
             android:paddingVertical="32dp"
             android:orientation="vertical"
-            android:gravity="center">
+            android:layout_gravity="center">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="EDAD"
-                android:textColor="@color/title_text"/>
+                android:textColor="@color/title_text"
+                android:gravity="center"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="10"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:gravity="center"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="32dp"
-                android:gravity="center">
+                android:layout_gravity="center">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btnSubtractAge"
@@ -226,7 +228,8 @@
                     app:backgroundTint="@color/purple_500"
                     app:tint="@color/white"
                     android:src="@drawable/ic_remove"
-                    android:layout_marginEnd="16dp"/>
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"/>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btnSubtractAgePlus"
@@ -235,7 +238,8 @@
                     app:backgroundTint="@color/purple_500"
                     app:tint="@color/white"
                     android:src="@drawable/ic_plus"
-                    android:layout_marginEnd="16dp"/>
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"/>
             </LinearLayout>
         </LinearLayout>
 
