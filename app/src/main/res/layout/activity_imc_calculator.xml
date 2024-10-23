@@ -96,14 +96,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ALTURA"
+                android:text="@string/altura"
+                android:textAllCaps="true"
                 android:textColor="@color/title_text"
                 android:textSize="17dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvHeight"
-                android:text="120"
+                android:text="@string/cm"
                 android:textSize="40dp"
                 android:textStyle="bold"
                 android:textColor="@color/white"/>
@@ -125,38 +126,41 @@
         android:layout_width="0dp"
         android:layout_height="150dp"
         app:cardCornerRadius="16dp"
+        android:layout_marginTop="32dp"
         app:cardBackgroundColor="@color/bg_comp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/viewMale"
+        app:layout_constraintStart_toStartOf="@id/viewMale"
         app:layout_constraintTop_toBottomOf="@id/viewHeight"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/viewFemale"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="32dp"
             android:orientation="vertical"
             android:gravity="center">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PESO"
-                android:textColor="@color/title_text"/>
+                android:text="@string/peso"
+                android:textColor="@color/title_text"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textSize="16sp"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="50 kg"
+                android:text="@string/kg"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textSize="32sp"
+                android:textStyle="bold"
                 android:textColor="@color/white"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="32dp"
                 android:gravity="center">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -183,43 +187,45 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/viewAge"
-        android:layout_width="0dp"
+        a android:layout_width="0dp"
         android:layout_height="150dp"
         app:cardCornerRadius="16dp"
+        android:layout_marginTop="32dp"
         app:cardBackgroundColor="@color/bg_comp"
-        app:layout_constraintTop_toBottomOf="@id/viewHeight"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/viewFemale"
         app:layout_constraintStart_toStartOf="@id/viewFemale"
+        app:layout_constraintTop_toBottomOf="@id/viewHeight"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="32dp"
             android:orientation="vertical"
-            android:layout_gravity="center">
+            android:gravity="center">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="EDAD"
+                android:text="@string/edad"
                 android:textColor="@color/title_text"
-                android:gravity="center"/>
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textSize="16sp"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="10"
-                android:textColor="@color/white"
-                android:gravity="center"/>
+                android:text="@string/nedad"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="32dp"
-                android:layout_gravity="center">
+                android:gravity="center">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btnSubtractAge"
@@ -228,8 +234,7 @@
                     app:backgroundTint="@color/purple_500"
                     app:tint="@color/white"
                     android:src="@drawable/ic_remove"
-                    android:layout_marginEnd="16dp"
-                    android:gravity="center"/>
+                    android:layout_marginEnd="16dp"/>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btnSubtractAgePlus"
@@ -238,8 +243,7 @@
                     app:backgroundTint="@color/purple_500"
                     app:tint="@color/white"
                     android:src="@drawable/ic_plus"
-                    android:layout_marginEnd="16dp"
-                    android:gravity="center"/>
+                    android:layout_marginEnd="16dp"/>
             </LinearLayout>
         </LinearLayout>
 
