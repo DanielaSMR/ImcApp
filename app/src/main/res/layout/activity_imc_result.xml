@@ -3,8 +3,84 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@color/bg_app"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ImcResultActivity">
+
+    <TextView
+        android:id="@+id/texto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:text="Tu resultado:"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:padding="30dp"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    
+    <androidx.cardview.widget.CardView
+        android:id="@+id/resultado"
+        android:layout_width="0dp"
+        android:layout_height="450dp"
+        app:cardCornerRadius="16dp"
+        app:cardBackgroundColor="@color/bg_comp_sel"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toBottomOf="@id/texto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/texto_imc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sobrepeso"
+                android:textColor="@color/bg_button"
+                android:layout_marginTop="45dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/imc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="20.53"
+                android:layout_marginTop="80dp"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textSize="60sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+            <TextView
+                android:id="@+id/desc_imc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tas gordo"
+                android:layout_marginTop="80dp"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/botonReCalc"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="20dp"
+        android:text="re-calcular"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:background="@color/purple_500"
+        app:layout_constraintTop_toBottomOf="@id/resultado"
+       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

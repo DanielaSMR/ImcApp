@@ -1,5 +1,6 @@
 package com.example.imcapp
 
+import android.content.Intent
 import android.icu.text.DecimalFormat
 import android.os.Bundle
 import android.widget.TextView
@@ -15,17 +16,11 @@ import com.google.android.material.slider.Slider
 
 class ImcCalculatorActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        initComponents()
-        initListeners()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_imc_calculator)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
+        initComponents()
+        initListeners()
     }
 
     private fun initListeners() {
@@ -39,17 +34,32 @@ class ImcCalculatorActivity : AppCompatActivity() {
             //tvHeight.text = value.toString()
             viewCm.text = DecimalFormat("#.##").format(value) + " cm"
         }
-        viewBotonHeight.setOnClickListener(){kg--}
-        viewBotonPlusHeight.setOnClickListener(){kg++}
-        viewBotonAge.setOnClickListener(){age--}
-        viewBotonPlusAge.setOnClickListener(){age++}
+        viewBotonHeight.setOnClickListener(){
+            setHeight(kg--)
+        }
+        viewBotonPlusHeight.setOnClickListener(){
+            setHeight(kg++)
+        }
+        viewBotonAge.setOnClickListener(){
+            setAge(age--)
+        }
+        viewBotonPlusAge.setOnClickListener(){
+            setAge(age++)
+        }
         viewBotonCalc.setOnClickListener(){
             navigate2result(calculateIMC())
         }
     }
 
-    private fun navigate2result(numero : Double) {
-        TODO("Not yet implemented")
+
+    companion object {
+        const val IMC_KEY = "RESULT"
+    }
+
+    private fun navigate2result(imc: Double) {
+        var intentIRA : Intent = Intent(this,ImcResultActivity::class.java)
+        intentIRA.putExtra(IMC_KEY, imc)
+        startActivity(intentIRA)
     }
 
     private fun calculateIMC(): Double{
@@ -63,6 +73,7 @@ class ImcCalculatorActivity : AppCompatActivity() {
     private fun setHeight(kg: Int){
         viewKg.text = kg.toString()
     }
+
 
     private fun initUI(){
         setGenderColor(false)
@@ -101,6 +112,7 @@ class ImcCalculatorActivity : AppCompatActivity() {
     private var age : Int = 0
     private var m : Double = 0.00
     private var kg : Int = 0
+
 
     private lateinit var viewBotonCalc : AppCompatButton
     private lateinit var viewBotonAge : FloatingActionButton
