@@ -1,5 +1,6 @@
 package com.example.imcapp
 
+import android.content.Intent
 import android.icu.text.DecimalFormat
 import android.os.Bundle
 import android.view.TextureView
@@ -12,17 +13,26 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.imcapp.ImcCalculatorActivity.Companion.IMC_KEY
 
 class ImcResultActivity : AppCompatActivity() {
+
+    private lateinit var viewBotonReCalc : AppCompatButton
+    private lateinit var viewTextoImc : TextView
+    private lateinit var viewDescImc : TextView
+    private lateinit var viewImc : TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_imc_result)
-        getImc()
         initComponents()
         initListeners()
-    }
 
-    private fun initListeners() {
+        val imc = intent.getDoubleExtra(ImcCalculatorActivity.IMC_KEY, 0.0)
+        val imcCategory = intent.getStringExtra(ImcCalculatorActivity.IMC_CATEGORY_KEY)
+        val imcDesc = intent.getStringExtra(ImcCalculatorActivity.IMC_DESC_KEY)
 
+        viewImc.text = "%.2f".format(imc)
+        viewTextoImc.text = "Categoria: $imcCategory"
+        viewDescImc.text = "$imcDesc"
     }
 
     private fun initComponents() {
@@ -32,31 +42,13 @@ class ImcResultActivity : AppCompatActivity() {
         viewImc = findViewById(R.id.imc)
     }
 
-    private fun initUI(){
-        setImc(getImc())
-        setTextoImc()
-    }
-
-    private fun setTextoImc(){
-        when (getImc()){
-            in 0.0 .. 18.5 -> "Infrapeso"
-            in 18.6 .. 24.9 -> "Normal"
-            in 25.0 .. 29.9 -> "Sobrepeso"
-            in 30.0 .. 40.0 -> "Obeso"
+    private fun initListeners() {
+        viewBotonReCalc.setOnClickListener {
+            val intent = Intent(this, ImcCalculatorActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+            finish() // Cierra la actividad actual
         }
     }
 
-    private fun getImc() : Double{
-        val imc = intent.extras?.getDouble(IMC_KEY) ?: -1.0
-        return imc
-    }
-
-    private fun setImc(imc: Double){
-        viewImc.text = imc.toString()
-    }
-
-    private lateinit var viewBotonReCalc : AppCompatButton
-    private lateinit var viewTextoImc : TextView
-    private lateinit var viewDescImc : TextView
-    private lateinit var viewImc : TextView
 }

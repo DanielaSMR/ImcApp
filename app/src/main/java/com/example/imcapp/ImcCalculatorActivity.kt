@@ -4,6 +4,7 @@ import android.content.Intent
 import android.icu.text.DecimalFormat
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
@@ -15,12 +16,38 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.slider.Slider
 
 class ImcCalculatorActivity : AppCompatActivity() {
+
+    companion object {
+        const val IMC_KEY = "EXTRA_IMC"
+        const val IMC_CATEGORY_KEY = "EXTRA_IMC_CATEGORY"
+        const val IMC_DESC_KEY = "EXTRA_IMC_DESC"
+    }
+
+    private var age : Int = 0
+    private var m : Double = 1.2
+    private var kg : Int = 0
+
+
+    private lateinit var viewBotonCalc : AppCompatButton
+    private lateinit var viewBotonAge : FloatingActionButton
+    private lateinit var viewBotonPlusAge : FloatingActionButton
+    private lateinit var viewBotonHeight : FloatingActionButton
+    private lateinit var viewBotonPlusHeight : FloatingActionButton
+    private lateinit var viewAge : TextView
+    private lateinit var viewKg : TextView
+    private lateinit var viewBarraCm : Slider
+    private lateinit var viewCm : TextView
+    private lateinit var viewMale: CardView
+    private lateinit var viewFemale: CardView
+    private var isMaleSelected: Boolean = true;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_imc_calculator)
         initComponents()
         initListeners()
+        initUI()
     }
 
     private fun initListeners() {
@@ -33,38 +60,61 @@ class ImcCalculatorActivity : AppCompatActivity() {
         viewBarraCm.addOnChangeListener { _, value, _ ->
             //tvHeight.text = value.toString()
             viewCm.text = DecimalFormat("#.##").format(value) + " cm"
+            m = value / 100.0
         }
         viewBotonHeight.setOnClickListener(){
-            setHeight(kg--)
+            setHeight(--kg)
         }
         viewBotonPlusHeight.setOnClickListener(){
-            setHeight(kg++)
+            setHeight(++kg)
         }
         viewBotonAge.setOnClickListener(){
-            setAge(age--)
+            setAge(--age)
         }
         viewBotonPlusAge.setOnClickListener(){
-            setAge(age++)
+            setAge(++age)
         }
         viewBotonCalc.setOnClickListener(){
-            navigate2result(calculateIMC())
+            if (kg > 0 &&  m > 0) {
+                val imc = calculateIMC(kg, m)
+                val imcCategory = getIMCCategory(imc)
+                val imcDesc = getIMCDesc(imc)
+                navigate2result(imc, imcCategory, imcDesc)
+            } else {
+                Toast.makeText(this, "Please enter valid values", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-
-    companion object {
-        const val IMC_KEY = "RESULT"
+    private fun calculateIMC(kg: Int, m: Double): Double {
+        return kg / (m * m)
     }
 
-    private fun navigate2result(imc: Double) {
+
+    private fun navigate2result(imc: Double,imcCategory: String, imcDesc: String) {
         var intentIRA : Intent = Intent(this,ImcResultActivity::class.java)
         intentIRA.putExtra(IMC_KEY, imc)
+        intentIRA.putExtra(IMC_CATEGORY_KEY, imcCategory)
+        intentIRA.putExtra(IMC_DESC_KEY, imcDesc)
         startActivity(intentIRA)
     }
 
-    private fun calculateIMC(): Double{
-        val resultado = kg/(m/2)
-        return resultado
+    private fun getIMCCategory(imc: Double): String {
+        return when {
+            imc < 18.5 -> "Infrapeso"
+            imc < 24.9 -> "Normal"
+            imc < 29.9 -> "Sobrepeso"
+            else -> "Obesidad"
+        }
+    }
+
+    private fun getIMCDesc(imc: Double): String {
+        return when {
+            imc < 18.5 -> "Estas por debajo de lo optimo para tu peso y altura"
+            imc < 24.9 -> "Estas en un peso normal y bueno para tu peso y altura"
+            imc < 29.9 -> "Estas por encima de los optimo para tu peso y altura"
+            else -> "Estas por encima de lo optimo para tu salud"
+        }
     }
 
     private fun setAge(age: Int){
@@ -74,11 +124,15 @@ class ImcCalculatorActivity : AppCompatActivity() {
         viewKg.text = kg.toString()
     }
 
+    private fun setWeight(m: Double) {
+        viewCm.text = DecimalFormat("#.##").format(m * 100) + " cm"
+    }
 
     private fun initUI(){
         setGenderColor(false)
         setAge(age)
         setHeight(kg)
+        setWeight(m)
     }
 
     private fun getBackGroundColor(isMaleSelected:Boolean): Int {
@@ -107,23 +161,8 @@ class ImcCalculatorActivity : AppCompatActivity() {
         viewBotonPlusAge = findViewById(R.id.btnSubtractAgePlus)
         viewBotonPlusHeight = findViewById(R.id.btnSubtractKgPlus)
         viewBotonCalc = findViewById(R.id.botonCalc)
+
     }
 
-    private var age : Int = 0
-    private var m : Double = 0.00
-    private var kg : Int = 0
 
-
-    private lateinit var viewBotonCalc : AppCompatButton
-    private lateinit var viewBotonAge : FloatingActionButton
-    private lateinit var viewBotonPlusAge : FloatingActionButton
-    private lateinit var viewBotonHeight : FloatingActionButton
-    private lateinit var viewBotonPlusHeight : FloatingActionButton
-    private lateinit var viewAge : TextView
-    private lateinit var viewKg : TextView
-    private lateinit var viewBarraCm : Slider
-    private lateinit var viewCm : TextView
-    private lateinit var viewMale: CardView
-    private lateinit var viewFemale: CardView
-    private var isMaleSelected: Boolean = true;
 }
